@@ -1,7 +1,7 @@
 {
   "name": "huoban_app_sdk",
   "version": "1.0.0",
-  "description": "",
+  "description": "for building applications on https://app.huoban.com",
   "main": "lib/HuobanAppSDK.js",
   "scripts": {
     "build": "webpack --mode=build",
@@ -10,10 +10,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.huobandev.com:airwin/huoban_app_sdk.git"
+    "url": "git+https://github.com/huobanteam/app-sdk-js.git"
   },
+  "keywords": [
+    "huoban"
+  ],
   "author": "airwin",
-  "license": "private",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/huobanteam/app-sdk-js/issues"
+  },
+  "homepage": "https://github.com/huobanteam/app-sdk-js#readme",
+  "dependencies": {
+    "mini-defer": "0.0.5",
+    "qrcode-js": "0.0.2",
+    "uniq-id": "^1.0.0"
+  },
   "devDependencies": {
     "babel-core": "^6.9.1",
     "babel-eslint": "^6.1.2",
@@ -26,10 +38,5 @@
     "mocha": "^2.5.3",
     "webpack": "^1.13.1",
     "yargs": "^4.7.1"
-  },
-  "dependencies": {
-    "mini-defer": "0.0.5",
-    "qrcode-js": "0.0.2",
-    "uniq-id": "^1.0.0"
   }
 }
