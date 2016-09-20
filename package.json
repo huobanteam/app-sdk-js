@@ -1,0 +1,35 @@
+{
+  "name": "huoban_app_sdk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/HuobanAppSDK.js",
+  "scripts": {
+    "build": "webpack --mode=build",
+    "dev": "webpack --progress --colors --watch --mode=dev",
+    "test": "mocha --compilers js:babel-core/register --colors -w ./test/*.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.huobandev.com:airwin/huoban_app_sdk.git"
+  },
+  "author": "airwin",
+  "license": "private",
+  "devDependencies": {
+    "babel-core": "^6.9.1",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "chai": "^3.5.0",
+    "eslint": "^3.5.0",
+    "mocha": "^2.5.3",
+    "webpack": "^1.13.1",
+    "yargs": "^4.7.1"
+  },
+  "dependencies": {
+    "mini-defer": "0.0.5",
+    "qrcode-js": "0.0.2",
+    "uniq-id": "^1.0.0"
+  }
+}
