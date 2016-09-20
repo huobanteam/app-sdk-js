@@ -5,7 +5,7 @@
 ***
 
 - [Import](#import)
-- [Initialize & Example](#initialize-amp-example)
+- [Initialize & Example](#initialize--example)
 - [SDK API](#sdk-api)
 - [Channel API](#channel-api)
 - [Client API](#client-api)
