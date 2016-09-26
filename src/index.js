@@ -10,24 +10,43 @@ export const isIPad = ConstVars.isIPad
 export const isMobile = ConstVars.isMobile
 export const isPC = ConstVars.isPC
 
-let instance = {}
+let instance = {
+  client: {}
+}
+let clientMapping = {
+  android: ClientWebviewUrl,
+  ios: ClientWebview,
+  browser: ClientBrowser
+}
 
-export function client(handlers) {
-  if (!instance.client) {
+function initClient(type) {
+  if (type && clientMapping[type]) {
+    return new clientMapping[type]()
+  }
+
+  throw new Error('unknown client type')
+}
+
+export function client(handlers, type) {
+  if (!type) {
     if (isAndroid) {
-      instance.client = new ClientWebviewUrl()
+      type = 'android'
     } else if (isIPhone || isIPad) {
-      instance.client = new ClientWebview()
+      type = 'ios'
     } else {
-      instance.client = new ClientBrowser()
+      type = 'browser'
     }
   }
 
-  if (handlers) {
-    instance.client.on(handlers)
+  if (!instance.client[type]) {
+    instance.client[type] = initClient(type)
   }
 
-  return instance.client
+  if (handlers) {
+    instance.client[type].on(handlers)
+  }
+
+  return instance.client[type]
 }
 
 export function host(handlers) {
