@@ -1,6 +1,6 @@
 {
   "name": "huoban_app_sdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "for building applications on https://app.huoban.com",
   "main": "lib/HuobanAppSDK.js",
   "scripts": {
@@ -35,6 +35,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "chai": "^3.5.0",
     "eslint": "^3.5.0",
+    "eslint-loader": "^1.5.0",
     "mocha": "^2.5.3",
     "webpack": "^1.13.1",
     "yargs": "^4.7.1"

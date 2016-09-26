@@ -332,7 +332,7 @@ export default class Client extends Channel {
    * @return {String}      编码后的dateURL base64格式
    */
   // generateQrcode(text, opts = {}) {
-  //   return qrcode.toDataURL(text, 4)
+  //   return qrcode.toDataURL(text, 6)
   // }
 
   /**
@@ -342,7 +342,7 @@ export default class Client extends Channel {
    * @return {Promise}
    */
   // genQRCode(text, opts = {}) {
-  //   let b64str = qrcode.toDataURL(text, 4)
+  //   let b64str = qrcode.toDataURL(text, 6)
 
   //   return Promise.resolve({dataURL: b64str})
   // }
