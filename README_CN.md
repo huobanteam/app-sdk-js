@@ -277,6 +277,16 @@ client.init(applicationId).then((data) => {
 
 - __title__ {String} 页面标题
 
+### `client.openItemDetail(itemId)`
+
+请求宿主打开默认的item详情页.
+
+- __itemId__ {Integer} 数据的id
+
+### `client.openItemList()`
+
+请求宿主打开默认的item列表页.
+
 ### `client.openItemDiff(itemId, fromRevId, toRevId, opts = {})`
 
 请求宿主打开diff查看组件.

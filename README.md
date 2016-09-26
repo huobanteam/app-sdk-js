@@ -281,6 +281,16 @@ Tell host to set __current__ page's title.
 
 - __title__ {String} The page title
 
+### `client.openItemDetail(itemId)`
+
+Tell host to open the default item detail page.
+
+- __itemId__ {Integer} The id of the item
+
+### `client.openItemList()`
+
+Tell host to open the default item list page.
+
 ### `client.openItemDiff(itemId, fromRevId, toRevId, opts = {})`
 
 Tell host to open the item diff component.

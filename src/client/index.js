@@ -200,6 +200,28 @@ export default class Client extends Channel {
   }
 
   /**
+   * 打开默认item详情展示页
+   * @param  {Integer} itemId 数据id
+   * @param  {Object}  opts   附加参数
+   */
+  openItemDetail(itemId, opts = {}) {
+    let params = {
+      ...opts,
+      item_id: parseInt(itemId, 10)
+    }
+
+    this.push('openItemDetail', params)
+  }
+
+  /**
+   * 打开默认item列表展示页
+   * @param  {Object} opts    附加参数
+   */
+  openItemList(opts = {}) {
+    this.push('openItemList', opts)
+  }
+
+  /**
    * 打开用户选择组件
    * @param  {Object}   opts 参数
    *                    opts.multi     {Integer} 是否多选
