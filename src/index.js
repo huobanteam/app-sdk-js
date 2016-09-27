@@ -8,6 +8,7 @@ export const isAndroid = ConstVars.isAndroid
 export const isIPhone = ConstVars.isIPhone
 export const isIPad = ConstVars.isIPad
 export const isMobile = ConstVars.isMobile
+export const isWap = ConstVars.isWap
 export const isPC = ConstVars.isPC
 
 let instance = {
@@ -29,7 +30,9 @@ function initClient(type) {
 
 export function client(handlers, type) {
   if (!type) {
-    if (isAndroid) {
+    if (isPC || isWap) {
+      type = 'browser'
+    } else if (isAndroid) {
       type = 'android'
     } else if (isIPhone || isIPad) {
       type = 'ios'
