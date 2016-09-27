@@ -280,11 +280,29 @@ export default class Client extends Channel {
   }
 
   /**
+   * 打开富文本编辑器
+   * @param  {Object}   opts 配置参数
+   *                    opts.value  {String}  默认的富文本
+   * @param  {Function} fn   回调方法, fn(data, error)
+   *                    data 为成功时的数据: {value: '<p>123</p>'}
+   *                    error 为出错时的具体错误, 如: {calcelled: true} 代表用户取消了选择, 或: {message: '默认值不正确'} 代表具体信息
+   */
+  openRichEditor(opts = {}, fn) {
+    let defaultOptions = {
+      value: ''
+    }
+    opts = {...defaultOptions, ...opts}
+
+    return this.send('openRichEditor', opts, null, fn)
+  }
+
+  /**
    * 打开分享
    * @param  {Object}   opts   参数
    *                    opts.title      {String}  分享的标题
    *                    opts.content    {String}  分享的描述
    *                    opts.url        {String}  分享的链接地址
+   *                    opts.via        {String}  指定分享的方式, 可以为: wechat/wechat_timeline/qq/weibo/clipboard/browser
    * @param  {Function} fn   回调方法, fn(data, error)
    *                    data 为成功时回传的数据, 如: {via: 'wechat'} 代表通过微信分享, 可能的方式有: wechat/wechat_timeline/qq/weibo/clipboard/browser
    *                    error 为出错时的具体错误, 如: {calcelled: true} 代表用户取消了选择, 或: {message: '分享失败'} 代表具体信息
@@ -294,7 +312,8 @@ export default class Client extends Channel {
     let defaultOptions = {
       title: '',
       content: '',
-      url: ''
+      url: '',
+      via: ''
     }
     opts = {...defaultOptions, ...opts}
 

@@ -400,6 +400,21 @@ client.openDatePicker({value: '2016-07-27', type: 'date'}, (data) => {
 })
 ```
 
+### `client.openRichEditor(opts, fn)`
+___this method use the `fn` to receive callback, not return a Promise___
+
+Tell host to open the rich text editor.
+
+- __opts__ {Object} The picker options
+  - [value] {String} _(optional)_ default text
+- __fn__ {Function} handler, fn(data, error)
+  - data {Object} data of callback, eg: _{value: '<p>abc</p>'}_
+     - value {String} edited text
+  - error {Object} error info
+    eg: _{cancelled: true}_ for user cancel the operation, _{message: 'default value error'}_ for some actual error
+     - cancelled {Boolean} true for user cancel the operation
+     - message {String} error message
+
 ### `client.openShare(opts, fn)`
 ___this method use the `fn` to receive callback, not return a Promise___
 
@@ -409,6 +424,7 @@ Tell host to open the share component.
   - [title] {String} share title
   - [content] {String} description of the share
   - [url] {String} the link to share
+  - [via] {String} specified share with, can be: wechat/wechat_timeline/qq/weibo/clipboard/browser/tongren
 - __fn__ {Function} handler, fn(data, error)
   - data {Object} data of callback, eg: _{via: 'wechat'}_
      - [via] {String} the app's name which shared with, can be: wechat/wechat_timeline/qq/weibo/clipboard/browser/tongren

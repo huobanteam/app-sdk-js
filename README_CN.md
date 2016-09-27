@@ -395,6 +395,21 @@ client.openDatePicker({value: '2016-07-27', type: 'date'}, (data) => {
 })
 ```
 
+### `client.openRichEditor(opts, fn)`
+___此方法使用`fn`参数接收回调, 而非返回Promise___
+
+请求宿主打开富文本编辑器.
+
+- __opts__ {Object} 选择器参数
+  - [value] {String} _(可选)_ 默认文本
+- __fn__ {Function} 回调: fn(data, error)
+  - data {Object} 回调的数据, 如: _{value: '<p>哈哈</p>'}_
+     - value {String} 编辑后的富文本
+  - error {Object} 错误信息
+    如: _{cancelled: true}_ 用户取消了本次操作, _{message: 'default value error'}_ 对应特定的错误
+     - cancelled {Boolean} 用户取消了操作时, 此项为true
+     - message {String} 错误描述
+
 ### `client.openShare(opts, fn)`
 ___此方法使用`fn`参数接收回调, 而非返回Promise___
 
@@ -404,9 +419,10 @@ ___此方法使用`fn`参数接收回调, 而非返回Promise___
   - [title] {String} 分享的标题
   - [content] {String} 分享的描述
   - [url] {String} 分享的链接
+  - [via] {String} 指定分享方式, 可以为: wechat(微信聊天)/wechat_timeline(微信朋友圈)/qq(腾讯QQ)/weibo(微博)/clipboard(
 - __fn__ {Function} 回调: fn(data, error)
   - data {Object} 成功时回传的数据, 如: _{via: 'wechat'}_
-     - [via] {String} 成功分享时使用的分享方式, 可能为: wechat(微信聊天)/wechat_timeline(微信朋友圈)/qq(腾讯QQ)/weibo(微博)/clipboard(系统剪切板)/browser(浏览器)/tongren(同仁app)
+     - [via] {String} 成功分享时使用的分享方式, 可以为: wechat(微信聊天)/wechat_timeline(微信朋友圈)/qq(腾讯QQ)/weibo(微博)/clipboard(系统剪切板)/browser(浏览器)/tongren(同仁app)
   - error {Object} 错误信息
     如: _{cancelled: true}_ 用户取消了本次操作, _{message: 'default value error'}_ 对应特定的错误
      - cancelled {Boolean} 用户取消了操作时, 此项为true
