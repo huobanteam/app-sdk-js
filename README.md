@@ -423,6 +423,7 @@ Tell host to open the share component.
 - __opts__ {Object} The share options
   - [title] {String} share title
   - [content] {String} description of the share
+  - [image] {String} share image's url
   - [url] {String} the link to share
   - [via] {String} specified share with, can be: wechat/wechat_timeline/qq/weibo/clipboard/browser/tongren
 - __fn__ {Function} handler, fn(data, error)

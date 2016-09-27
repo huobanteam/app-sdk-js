@@ -418,6 +418,7 @@ ___此方法使用`fn`参数接收回调, 而非返回Promise___
 - __opts__ {Object} 分享参数
   - [title] {String} 分享的标题
   - [content] {String} 分享的描述
+  - [image] {String} 分享的图片
   - [url] {String} 分享的链接
   - [via] {String} 指定分享方式, 可以为: wechat(微信聊天)/wechat_timeline(微信朋友圈)/qq(腾讯QQ)/weibo(微博)/clipboard(系统剪切板)/browser(浏览器)/tongren(同仁app)
 - __fn__ {Function} 回调: fn(data, error)
