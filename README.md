@@ -30,7 +30,7 @@ define(['huoban-app-sdk'], function (HuobanAppSDK) {/*...*/})
 
 ```html
 <!-- Script, available as `window.HuobanAppSDK` -->
-<script src="/node_modules/huoban-app-sdk/lib/HuobanAppSDK.js"></script>
+<script src="https://unpkg.com/huoban-app-sdk@1.0.5/lib/HuobanAppSDK.min.js"></script>
 ```
 
 ## Initialize & Example

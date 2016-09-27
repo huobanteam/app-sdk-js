@@ -1,5 +1,5 @@
 {
-  "name": "huoban_app_sdk",
+  "name": "huoban-app-sdk",
   "version": "1.0.5",
   "description": "for building applications on https://app.huoban.com",
   "main": "lib/HuobanAppSDK.js",

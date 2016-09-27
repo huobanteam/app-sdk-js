@@ -28,8 +28,8 @@ define(['huoban-app-sdk'], function (HuobanAppSDK) {/*...*/})
 ```
 
 ```html
-<!-- Script, available as `window.HuobanAppSDK` -->
-<script src="/node_modules/huoban-app-sdk/lib/HuobanAppSDK.js"></script>
+<!-- 头部引入, 会产生全局变量 `window.HuobanAppSDK` -->
+<script src="https://unpkg.com/huoban-app-sdk@1.0.5/lib/HuobanAppSDK.min.js"></script>
 ```
 
 ## 初始化
@@ -419,7 +419,7 @@ ___此方法使用`fn`参数接收回调, 而非返回Promise___
   - [title] {String} 分享的标题
   - [content] {String} 分享的描述
   - [url] {String} 分享的链接
-  - [via] {String} 指定分享方式, 可以为: wechat(微信聊天)/wechat_timeline(微信朋友圈)/qq(腾讯QQ)/weibo(微博)/clipboard(
+  - [via] {String} 指定分享方式, 可以为: wechat(微信聊天)/wechat_timeline(微信朋友圈)/qq(腾讯QQ)/weibo(微博)/clipboard(系统剪切板)/browser(浏览器)/tongren(同仁app)
 - __fn__ {Function} 回调: fn(data, error)
   - data {Object} 成功时回传的数据, 如: _{via: 'wechat'}_
      - [via] {String} 成功分享时使用的分享方式, 可以为: wechat(微信聊天)/wechat_timeline(微信朋友圈)/qq(腾讯QQ)/weibo(微博)/clipboard(系统剪切板)/browser(浏览器)/tongren(同仁app)
