@@ -120,12 +120,13 @@ HuobanAppSDK.host({
 })
 ```
 
-### `HuobanAppSDK.isAndroid` _(Property)_
+### `HuobanAppSDK.isClient` _(Property)_
 
-__Boolean__ if in Huoban Android APP
+__Boolean__ if in Huoban native APP
 
-### `HuobanAppSDK.isIPhone` _(Property)_
-__Boolean__ if in Huoban iOS APP
+### `HuobanAppSDK.isPC` _(Property)_
+
+__Boolean__ if in Huoban Web (https://app.huoban.com/)
 
 
 ## Channel API
@@ -406,6 +407,7 @@ ___this method use the `fn` to receive callback, not return a Promise___
 Tell host to open the rich text editor.
 
 - __opts__ {Object} The picker options
+  - title {String} editor's title
   - [value] {String} _(optional)_ default text
 - __fn__ {Function} handler, fn(data, error)
   - data {Object} data of callback, eg: _{value: '<p>abc</p>'}_

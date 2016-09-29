@@ -119,12 +119,13 @@ HuobanAppSDK.host({
 })
 ```
 
-### `HuobanAppSDK.isAndroid` _(属性)_
+### `HuobanAppSDK.isClient` _(属性)_
 
-__Boolean__ 是否当前为云表格安卓app环境
+__Boolean__ 是否当前为云表格原生app环境
 
-### `HuobanAppSDK.isIPhone` _(属性)_
-__Boolean__ 是否当前为云表格iOS app环境
+### `HuobanAppSDK.isPC` _(属性)_
+
+__Boolean__ 是否当前为云表格web端环境
 
 
 ## Channel API
@@ -401,6 +402,7 @@ ___此方法使用`fn`参数接收回调, 而非返回Promise___
 请求宿主打开富文本编辑器.
 
 - __opts__ {Object} 选择器参数
+  - title {String} 编辑器的标题
   - [value] {String} _(可选)_ 默认文本
 - __fn__ {Function} 回调: fn(data, error)
   - data {Object} 回调的数据, 如: _{value: '<p>哈哈</p>'}_
