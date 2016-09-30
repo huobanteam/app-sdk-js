@@ -1,4 +1,4 @@
-import {isClientAndroid, isClientIOS} from './const'
+import {isClientAndroid, isClientIOS, isWap, isPC} from './const'
 import ClientBrowser from './client/browser'
 import ClientWebview from './client/webview'
 import ClientWebviewUrl from './client/webview_url'
@@ -10,7 +10,9 @@ let instance = {}
 
 export function client(handlers) {
   if (!instance.client) {
-    if (isClientAndroid) {
+    if (isPC || isWap) {
+      instance.client = new ClientBrowser()
+    } else if (isClientAndroid) {
       instance.client = new ClientWebviewUrl()
     } else if (isClientIOS) {
       instance.client = new ClientWebview()

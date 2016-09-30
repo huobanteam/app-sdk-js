@@ -468,10 +468,8 @@ export default class Client extends Channel {
       this._user = ret.user
       this._table = ret.table || ret.app
       // 兼容旧的数据命名，避免图表应用报错
-      // @todo 更新图表使用的app_id为table_id
-      if (!this._table.app_id && this._table.table_id) {
-        this._table.app_id = this._table.table_id
-      }
+      let tableId = this._table.table_id || this._table.app_id
+      this._table.app_id = this._table.table_id = tableId
       this._version = ret.version
       this.appId = applicationId
 
