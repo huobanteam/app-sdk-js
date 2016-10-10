@@ -17,8 +17,8 @@ export function client(handlers) {
     } else if (isClientIOS || isIPhone) {
       instance.client = new ClientWebview()
     } else {
-      // instance.client = new ClientBrowser()
-      alert('unknown client type: ' + JSON.stringify({isClientAndroid, isClientIOS, isWap, isPC, isIPhone, isAndroid}))
+      instance.client = new ClientBrowser()
+      // alert('unknown client type: ' + JSON.stringify({isClientAndroid, isClientIOS, isWap, isPC, isIPhone, isAndroid}))
     }
   }
 
