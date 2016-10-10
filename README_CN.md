@@ -28,8 +28,8 @@ define(['huoban-app-sdk'], function (HuobanAppSDK) {/*...*/})
 ```
 
 ```html
-<!-- 头部引入, 会产生全局变量 `window.HuobanAppSDK` -->
-<script src="https://unpkg.com/huoban-app-sdk@1.0.5/lib/HuobanAppSDK.min.js"></script>
+<!-- 全局引入, 全局变量名为 `window.HuobanAppSDK` -->
+<script src="//unpkg.com/huoban-app-sdk@latest/lib/HuobanAppSDK.min.js"></script>
 ```
 
 ## 初始化
@@ -594,4 +594,4 @@ client.send('init', { app_id: 100117 }).then((data) => {
 
 ## Author & License
 
-created by [airwin](https://weibo.com/airwin) and released under the MIT license.
+created by [airwin](https://github.com/airwin) and released under the MIT license.

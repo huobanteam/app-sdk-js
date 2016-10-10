@@ -30,7 +30,7 @@ define(['huoban-app-sdk'], function (HuobanAppSDK) {/*...*/})
 
 ```html
 <!-- Script, available as `window.HuobanAppSDK` -->
-<script src="https://unpkg.com/huoban-app-sdk@1.0.5/lib/HuobanAppSDK.min.js"></script>
+<script src="//unpkg.com/huoban-app-sdk@latest/lib/HuobanAppSDK.min.js"></script>
 ```
 
 ## Initialize & Example
@@ -646,4 +646,4 @@ This function is passed as the second argument to message handlers.
 
 ## Author & License
 
-created by [airwin](https://weibo.com/airwin) and released under the MIT license.
+created by [airwin](https://github.com/airwin) and released under the MIT license.
