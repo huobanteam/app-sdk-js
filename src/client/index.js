@@ -1,3 +1,4 @@
+require('es6-promise').polyfill()
 import defer from 'mini-defer'
 // import qrcode from 'qrcode-js'
 
