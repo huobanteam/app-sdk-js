@@ -1,8 +1,9 @@
 require('es6-promise').polyfill()
+import verCmp from 'semver-compare'
 import defer from 'mini-defer'
 // import qrcode from 'qrcode-js'
 
-import {isPC, MSG_TYPES} from '../const'
+import {isPC, isClientAndroid, isClientIOS, MSG_TYPES} from '../const'
 import {cvFiltersToV1, cvFiltersToV2} from '../util'
 
 import Channel from '../channel'
@@ -139,7 +140,8 @@ export default class Client extends Channel {
       table_id: app.app_id || app.table_id,
       space_id: app.space_id
     }
-    if (filters) {
+    let isV2 = this._checkUp2V2()
+    if (filters && !isV2) {
       params.filters = cvFiltersToV1(filters)
     }
     if (viewId) {
@@ -152,13 +154,15 @@ export default class Client extends Channel {
 
     // 筛选器格式转换
     let _fn
-    if (fn) {
+    if (fn && !isV2) {
       _fn = (data) => {
         if (data.filters) {
           data.filters = cvFiltersToV2(data.filters)
         }
         fn(data)
       }
+    } else {
+      _fn = fn
     }
 
     if (_event && isPC) {
@@ -472,7 +476,7 @@ export default class Client extends Channel {
       let tableId = this._table.table_id || this._table.app_id
       this._table.app_id = this._table.table_id = tableId
       this._version = ret.version
-      this.appId = applicationId
+      this.applicationId = applicationId
 
       return {...ret, app: this._table, table: this._table}
     })
@@ -490,5 +494,16 @@ export default class Client extends Channel {
       offsetX: e.offsetX,
       offsetY: e.offsetY
     }
+  }
+
+  _checkUp2V2() {
+    let upgraded = false
+    if (isClientAndroid) {
+      upgraded = verCmp(this._version, '2.4.0') >= 0
+    } else if (isClientIOS) {
+      upgraded = verCmp(this._version, '140') >= 0
+    }
+
+    return upgraded
   }
 }
