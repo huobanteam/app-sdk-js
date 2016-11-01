@@ -174,8 +174,7 @@ export default class Channel {
     } catch (err) {
       this.emit('error', {type: 'json', source: eData, err})
       this.emit('error.json', {source: eData, err})
-      // alert(JSON.stringify(err))
-      alert('HB_APP_SDK: json parse fail\n' + eData)
+      alert('HB_APP_SDK: JSON解析失败, 请将当前界面截图反馈, 谢谢!\n' + JSON.stringify(err) + '\n' + eData)
       throw new Error('HB_APP_SDK: malformed message')
     }
 
