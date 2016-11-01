@@ -141,8 +141,8 @@ export default class Client extends Channel {
       space_id: app.space_id
     }
     let isV2 = this._checkUp2V2()
-    if (filters && !isV2) {
-      params.filters = cvFiltersToV1(filters)
+    if (filters) {
+      params.filters = isV2 ? filters : cvFiltersToV1(filters)
     }
     if (viewId) {
       if (typeof viewId == 'function') {
@@ -497,11 +497,14 @@ export default class Client extends Channel {
   }
 
   _checkUp2V2() {
-    let upgraded = false
+    let upgraded
+
     if (isClientAndroid) {
       upgraded = verCmp(this._version, '2.4.0') >= 0
     } else if (isClientIOS) {
       upgraded = verCmp(this._version, '140') >= 0
+    } else {
+      upgraded = verCmp(this._version, '4.1') >= 0
     }
 
     return upgraded
