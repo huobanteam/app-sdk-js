@@ -1,12 +1,39 @@
 require('es6-promise').polyfill()
 import verCmp from 'semver-compare'
 import defer from 'mini-defer'
-// import qrcode from 'qrcode-js'
+// import kjua from 'kjua'
 
 import {isPC, isClientAndroid, isClientIOS, MSG_TYPES} from '../const'
 import {cvFiltersToV1, cvFiltersToV2} from '../util'
 
 import Channel from '../channel'
+
+// @see https://larsjung.de/kjua/
+const defaultQRCodeOptions = {
+  render: 'image',
+  crisp: true,
+  minVersion: 1,
+  ecLevel: 'L',
+  size: 300,
+  ratio: null,
+  fill: '#333',
+  back: '#fff',
+  rounded: 50,
+  quiet: 1,
+  mode: 'plain',
+
+  mSize: 30,
+  mPosX: 50,
+  mPosY: 50,
+
+  label: '',
+  fontname: 'sans',
+  fontcolor: '#333',
+
+  image: null,
+  title: null,
+  text: ''
+}
 
 export default class Client extends Channel {
   constructor(handlers) {
@@ -352,24 +379,26 @@ export default class Client extends Channel {
   /**
    * 生成二维码的base64编码
    * @param  {String} text 要编码的字符串
-   * @param  {Object} opts 编码参数
+   * @param  {Object} opts 二维码相关参数(kjua)
    * @return {String}      编码后的dateURL base64格式
    */
   // generateQrcode(text, opts = {}) {
-  //   return qrcode.toDataURL(text, 6)
+  //   opts = {...defaultQRCodeOptions, ...opts, text, render: 'canvas'}
+
+  //   return kjua(opts).toDataURL('image/png')
   // }
 
   /**
-   * 生成二维码的base64编码 (返回Promise)
+   * 生成二维码的base64编码 (web only)
    * @param  {String} text 要编码的字符串
-   * @param  {Object} opts 编码参数
+   * @param  {Object} opts 二维码相关参数(kjua)
    * @return {Promise}
    */
-  // genQRCode(text, opts = {}) {
-  //   let b64str = qrcode.toDataURL(text, 6)
+  genQRCode(text, opts = {}) {
+    opts = {...defaultQRCodeOptions, ...opts, text}
 
-  //   return Promise.resolve({dataURL: b64str})
-  // }
+    return this.send('genQRCode', opts)
+  }
 
   /**
    * 生成并展示一个二维码 (web only)
@@ -378,32 +407,7 @@ export default class Client extends Channel {
    * @param  {Object} _event 内部参数，代表触发的DOM事件
    */
   showQRCode(text, opts = {}, _event) {
-    // @see https://larsjung.de/kjua/
-    let defaultOptions = {
-      render: 'image', // canvas/image
-      crisp: true,
-      minVersion: 1,
-      ecLevel: 'L',
-      size: 300,
-      ratio: null,
-      fill: '#333',
-      back: '#fff',
-      rounded: 50,
-      quiet: 1,
-      mode: 'plain',
-
-      mSize: 30,
-      mPosX: 50,
-      mPosY: 50,
-
-      label: '',
-      fontname: 'sans',
-      fontcolor: '#333',
-
-      image: null,
-      title: null
-    }
-    opts = {...defaultOptions, ...opts, text}
+    opts = {...defaultQRCodeOptions, ...opts, text}
 
     if (_event && isPC) {
       opts.ePos = this._getEventPosition(_event)
