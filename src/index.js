@@ -1,3 +1,4 @@
+import './polyfill'
 import {isClientAndroid, isClientIOS, isWap, isPC, isIPhone, isAndroid} from './const'
 import ClientBrowser from './client/browser'
 import ClientWebview from './client/webview'
@@ -12,10 +13,10 @@ export function client(handlers) {
   if (!instance.client) {
     if (isPC || isWap) {
       instance.client = new ClientBrowser()
-    } else if (isClientAndroid || isAndroid) {
-      instance.client = new ClientWebviewUrl()
     } else if (isClientIOS || isIPhone) {
       instance.client = new ClientWebview()
+    } else if (isClientAndroid && isAndroid) {
+      instance.client = new ClientWebviewUrl()
     } else {
       instance.client = new ClientBrowser()
       // alert('unknown client type: ' + JSON.stringify({isClientAndroid, isClientIOS, isWap, isPC, isIPhone, isAndroid}))

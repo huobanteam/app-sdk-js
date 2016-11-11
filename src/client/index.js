@@ -1,4 +1,3 @@
-require('es6-promise').polyfill()
 import verCmp from 'semver-compare'
 import defer from 'mini-defer'
 // import kjua from 'kjua'
