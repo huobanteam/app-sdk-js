@@ -428,6 +428,7 @@ Tell host to open the share component.
   - [image] {String} share image's url
   - [url] {String} the link to share
   - [type] {String} share type, can be: url(default)/image(share image blob)
+  - [content_info] {Object} extra info, eg: {size: 1024} (when type is 'image')
   - [via] {String} specified share with, can be: wechat/wechat_timeline/qq/weibo/clipboard/browser/tongren
 - __fn__ {Function} handler, fn(data, error)
   - data {Object} data of callback, eg: _{via: 'wechat'}_

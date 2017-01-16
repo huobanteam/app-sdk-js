@@ -423,6 +423,7 @@ ___此方法使用`fn`参数接收回调, 而非返回Promise___
   - [image] {String} 分享的图片(logo)
   - [url] {String} 分享数据的链接
   - [type] {String} 分享的类型, 可以为: url(默认链接形态的分享)/image(图片)
+  - [content_info] {Object} 分享内容的附加信息, 比如type=image时: {size: 1024}
   - [via] {String} 指定分享方式, 可以为: wechat(微信聊天)/wechat_timeline(微信朋友圈)/qq(腾讯QQ)/weibo(微博)/clipboard(系统剪切板)/browser(浏览器)/tongren(同仁app)
 - __fn__ {Function} 回调: fn(data, error)
   - data {Object} 成功时回传的数据, 如: _{via: 'wechat'}_
