@@ -9,13 +9,13 @@ export default class ClientBrowser extends Client {
     let deferred = defer()
 
     if (window.parent === window) {
-      delay(r => {
+      delay(() => {
         deferred.reject({message: '无法找到宿主环境'})
       })
       return deferred.promise
     }
     if (!window.MessageChannel) {
-      delay(r => {
+      delay(() => {
         deferred.reject({message: '您的浏览器不支持 MessageChannel'})
       })
       return deferred.promise

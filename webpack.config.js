@@ -3,11 +3,11 @@ var path = require('path');
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var env = require('yargs').argv.mode;
 
+var isProd = env === 'build'
 var libraryName = 'HuobanAppSDK';
-
 var plugins = [], outputFile;
 
-if (env === 'build') {
+if (isProd) {
   plugins.push(new UglifyJsPlugin({ minimize: true, compressor: { warnings: false } }));
   outputFile = libraryName + '.min.js';
 } else {
@@ -16,7 +16,7 @@ if (env === 'build') {
 
 var config = {
   entry: __dirname + '/src/index.js',
-  devtool: 'source-map',
+  devtool: isProd ? '' : 'source-map',
   output: {
     path: __dirname + '/lib',
     filename: outputFile,

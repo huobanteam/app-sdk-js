@@ -62,8 +62,8 @@ export default class Client extends Channel {
    * @param  {String} url   新窗口打开的链接地址
    * @param  {String} title 新窗口的标题
    */
-  openWebPage(url, title) {
-    this.push('openWebPage', {url, title})
+  openWebPage(url, title, opts = {}) {
+    this.push('openWebPage', {...opts, url, title})
   }
 
   /**
@@ -130,18 +130,11 @@ export default class Client extends Channel {
    * 获取指定表格信息
    * @param  {Integer} tableId 表格id
    * @return {Promise}
-   *         .then({app_id: 123, name: xx, ..})
+   *         .then({table_id: 123, name: xx, ..})
    *         .catch(err)
    */
   getTableData(tableId) {
     return this.send('getTableData', {table_id: tableId})
-  }
-
-  /**
-   * 获取表格信息(getTableData的别名)
-   */
-  getAppData(tableId) {
-    return this.getTableData(tableId)
   }
 
   /**
@@ -156,26 +149,31 @@ export default class Client extends Channel {
 
   /**
    * 打开筛选器
-   * @param  {Object}   app     表格信息
+   * @param  {Object}   table   表格信息
    * @param  {Object}   filters 筛选数据
-   * @param  {Integer}  viewId  视图ID
    * @param  {Function} fn      筛选器发生变化时的回调函数
    */
-  openFilter(app, filters, viewId, fn, _event) {
+  openFilter(table, filters, fn) {
+    let args = [].slice.apply(null, arguments)
+
+    if (args.length = 1) {
+      table = this.table
+      fn = args[0]
+    } else if (args.length == 2) {
+      table = this.table
+      filters = args[0]
+      fn = args[1]
+    } else if (args.length == 3) {
+      table = (table && table.table_id) ? table : this.table
+    }
+
     let params = {
-      table_id: app.app_id || app.table_id,
-      space_id: app.space_id
+      table_id: table.table_id,
+      space_id: table.space_id
     }
     let isV2 = this._checkUp2V2()
-    if (filters) {
+    if (filters && (['object', 'function'].indexOf(typeof filters) >= 0) && filters.length !== 0) {
       params.filters = isV2 ? filters : cvFiltersToV1(filters)
-    }
-    if (viewId) {
-      if (typeof viewId == 'function') {
-        fn = viewId
-      } else if (viewId > 0) {
-        params.viewId = parseInt(viewId, 10)
-      }
     }
 
     // 筛选器格式转换
@@ -189,10 +187,6 @@ export default class Client extends Channel {
       }
     } else {
       _fn = fn
-    }
-
-    if (_event && isPC) {
-      params.ePos = this._getEventPosition(_event)
     }
 
     return this.send('openFilter', params, null, _fn)
@@ -210,14 +204,31 @@ export default class Client extends Channel {
    *                   opts.created_by    {Object}  更新者的用户对象
    *                   opts.updated_on    {String}  更新时间
    */
-  openItemDiff(itemId, fromRevId, toRevId, opts = {}) {
-    let params = {
-      ...opts,
-      item_id: parseInt(itemId, 10),
-      from_revision_id: parseInt(fromRevId, 10),
-      to_revision_id: parseInt(toRevId, 10),
-      field_id: parseInt(opts.field_id, 10)
+  openItemDiff(itemId, fromRevId, toRevId, opts) {
+    let params
+    // shorter call `fromRevId` as `opts`
+    if (!toRevId && !opts && fromRevId) {
+      params = {
+        ...fromRevId,
+        item_id: parseInt(itemId, 10),
+        field_id: parseInt(fromRevId.field_id, 10)
+      }
+    } else {
+      params = {
+        ...opts,
+        item_id: parseInt(itemId, 10),
+        from_revision_id: parseInt(fromRevId, 10),
+        to_revision_id: parseInt(toRevId, 10),
+        field_id: parseInt(opts.field_id, 10)
+      }
     }
+    if (!params.from_revision_id && params.old_revision_id) {
+      params.from_revision_id = params.old_revision_id
+    }
+    if (!params.to_revision_id && params.revision_id) {
+      params.to_revision_id = params.revision_id
+    }
+
     if (params.field_id && !params.field_name && this._table) {
       this._table.fields.forEach(f => {
         if (f.field_id == params.field_id) {
@@ -226,6 +237,10 @@ export default class Client extends Channel {
         }
       })
     }
+
+    delete params.old_revision_id
+    delete params.revision_id
+    // should pluck accepted keys from params
 
     this.push('openItemDiff', params)
   }
@@ -275,6 +290,9 @@ export default class Client extends Channel {
       width: 300
     }
     opts = {...defaultOptions, ...opts}
+    if (['left-bottom', 'left-top', 'right-top', 'right-bottom'].indexOf(opts.placement) < 0) {
+      opts.placement = 'right-bottom'
+    }
     if (_event && isPC) {
       opts.ePos = this._getEventPosition(_event)
     }
@@ -332,7 +350,7 @@ export default class Client extends Channel {
    * @param  {Object}   opts   参数
    *                    opts.title      {String}  分享的标题
    *                    opts.content    {String}  分享的描述
-   *                    opts.url        {String}  分享的链接地址
+   *                    opts.url        {String}  分享的数据地址
    *                    opts.via        {String}  指定分享的方式, 可以为: wechat/wechat_timeline/qq/weibo/clipboard/browser
    * @param  {Function} fn   回调方法, fn(data, error)
    *                    data 为成功时回传的数据, 如: {via: 'wechat'} 代表通过微信分享, 可能的方式有: wechat/wechat_timeline/qq/weibo/clipboard/browser
@@ -343,8 +361,10 @@ export default class Client extends Channel {
     let defaultOptions = {
       title: '',
       content: '',
-      url: '',
-      via: ''
+      image: '',
+      via: '',
+      url: '', // 分享的内容的地址：链接 / 图片 / 文件
+      type: '' // url(default) / image / file
     }
     opts = {...defaultOptions, ...opts}
 
@@ -470,6 +490,14 @@ export default class Client extends Channel {
     this.push('installApplication', {application_id: applicationId})
   }
 
+  /**
+   * 安装模板
+   * @param  {Integer} packageId 模板的id
+   */
+  installPackage(packageId) {
+    this.push('installPackage', {package_id: packageId})
+  }
+
   _init(applicationId) {
     return this.send('init', {application_id: applicationId}).then(ret => {
       this._ticket = ret.ticket
@@ -489,13 +517,14 @@ export default class Client extends Channel {
     let target = e.currentTarget || e.target
     let rect = target.getBoundingClientRect()
     let {top, bottom, left, right, width, height} = rect
+    let {clientX, clientY, offsetX, offsetY} = e
 
     return {
       target: {top, bottom, left, right, width, height, offsetWidth: e.target.offsetWidth, offsetHeight: e.target.offsetHeight},
-      clientX: e.clientX,
-      clientY: e.clientY,
-      offsetX: e.offsetX,
-      offsetY: e.offsetY
+      clientX,
+      clientY,
+      offsetX,
+      offsetY
     }
   }
 

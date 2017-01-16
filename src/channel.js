@@ -88,11 +88,9 @@ export default class Channel {
   }
 
   emit(action, data, responder) {
-    // if (isAndroid) {
-    //   alert('emit:' + action +'\n|href:'+location.href)
-    // }
     let ret = []
     let halted = false
+    let handled = false
     if (action && this.handlers[action]) {
       let handlers = this.handlers[action]
       ret = handlers.map(fn => {
@@ -102,13 +100,14 @@ export default class Channel {
           if (false === _ret) {
             halted = true
           }
+          handled = true
         }
         return _ret
       })
     }
 
     if (action != '*' && this.handlers['*']) {
-      ret = ret.concat(this.handlers['*'].map(fn => fn(action, data)))
+      ret = ret.concat(this.handlers['*'].map(fn => fn(action, data, handled ? null : responder)))
     }
 
     return ret

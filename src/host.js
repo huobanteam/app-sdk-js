@@ -9,7 +9,7 @@ export default class Host extends Channel {
     this.connections = {}
     this.handleHandshake = this._handleHandshake.bind(this)
     window.addEventListener('message', this.handleHandshake, false)
-    this.ready(r => {
+    this.ready(() => {
       this.runHeartbeatDetection()
     })
   }
@@ -25,7 +25,7 @@ export default class Host extends Channel {
       }
     })
 
-    setTimeout(r => {
+    setTimeout(() => {
       this.runHeartbeatDetection()
     }, this.heartbeatFrequency * 1000)
   }
