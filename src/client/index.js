@@ -156,7 +156,7 @@ export default class Client extends Channel {
   openFilter(table, filters, fn) {
     let args = [].slice.apply(null, arguments)
 
-    if (args.length = 1) {
+    if (args.length == 1) {
       table = this.table
       fn = args[0]
     } else if (args.length == 2) {
