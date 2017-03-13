@@ -154,7 +154,7 @@ export default class Client extends Channel {
    * @param  {Function} fn      筛选器发生变化时的回调函数
    */
   openFilter(...args) {
-    let table, filters, fn
+    let table = args[0], filters = args[1], fn = args[2]
 
     if (args.length == 1) {
       table = this.table
