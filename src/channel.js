@@ -73,7 +73,7 @@ export default class Channel {
   off(action, fn) {
     if (action && this.handlers[action]) {
       if (fn) {
-        let idx = this.handlers[action].indexOf(fn)
+        const idx = this.handlers[action].indexOf(fn)
         if (idx >= 0) {
           this.handlers[action].splice(idx, 1)
         }
@@ -134,7 +134,7 @@ export default class Channel {
    * @return {Promise|String}  返回Promise或请求的id
    */
   send(action, data, _id, fn) {
-    let id = _id || this._unique_id()
+    const id = _id || this._unique_id()
 
     this.ready(() => {
       // console.log('channel.send', action, data, id)
@@ -147,7 +147,7 @@ export default class Channel {
       this.promises[id] = fn
       return id
     } else {
-      let deferred = defer()
+      const deferred = defer()
       this.promises[id] = deferred
 
       return deferred.promise
@@ -183,7 +183,7 @@ export default class Channel {
 
     if (id) {
       if (id in this.promises) {
-        let promise = this.promises[id]
+        const promise = this.promises[id]
         // promise maybe an instance of Promise or a function
         if (promise.resolve) {
           if (eData.error) {
@@ -194,6 +194,7 @@ export default class Channel {
             promise.reject({cancelled: true})
           }
           this.promises[id] = null
+          delete this.promises[id]
         } else {
           if (eData.result || eData.error) {
             this.promises[id](eData.result, eData.error)
@@ -202,7 +203,7 @@ export default class Channel {
           }
         }
       } else if (action && this.handlers[action]) {
-        let responder = (ret) => {
+        const responder = (ret) => {
           this.send(action, ret, id)
         }
         this.emit(action, data, responder)
@@ -230,7 +231,7 @@ export default class Channel {
   }
 
   _unique_id(prefix = 'cb_', length = 10, decimal = 16) {
-    let x64 = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    const x64 = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
     return uniqID.generateUUID(prefix + x64.substr(0, length), decimal)()
   }

@@ -6,7 +6,7 @@ import Client from './index'
 export default class ClientBrowser extends Client {
 
   init(applicationId) {
-    let deferred = defer()
+    const deferred = defer()
 
     if (window.parent === window) {
       delay(() => {
@@ -34,7 +34,7 @@ export default class ClientBrowser extends Client {
 
     this._id = this._unique_id('c_', 8)
 
-    let mc = new MessageChannel()
+    const mc = new MessageChannel()
     this.port = mc.port1
     this.port.onmessage = this.handleMessage.bind(this)
 
@@ -56,7 +56,7 @@ export default class ClientBrowser extends Client {
   }
 
   _processMessage(e) {
-    let eData = e.data
+    const eData = e.data
     switch (eData.action) {
       case MSG_TYPES.CONNECT:
         if (eData.data.error) {

@@ -23,12 +23,12 @@ export default class ClientWebview extends Client {
       urlArr.push('params=' + encodeURIComponent(JSON.stringify(data)))
     }
 
-    let url = urlArr.join('&')
+    const url = urlArr.join('&')
     this._invokeNative(url)
   }
 
   _invokeNative(url) {
-    let iframe = document.createElement('iframe')
+    const iframe = document.createElement('iframe')
     iframe.style.width = 0
     iframe.style.height = 0
     iframe.style.display = 'none'

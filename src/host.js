@@ -56,7 +56,7 @@ export default class Host extends Channel {
 
   report() {
     let conns = 0
-    let appClients = this.getPorts().reduce((ret, con) => {
+    const appClients = this.getPorts().reduce((ret, con) => {
       conns++
       if (!ret[con.application_id]) {
         ret[con.application_id] = 0
@@ -64,7 +64,7 @@ export default class Host extends Channel {
       ret[con.application_id]++
       return ret
     }, {})
-    let appIds = Object.keys(appClients)
+    const appIds = Object.keys(appClients)
 
     console.log('当前已连接应用数：', appIds.length, ', 已连接页面总数：', conns, ', 应用计数统计：', appClients)
   }
@@ -79,10 +79,10 @@ export default class Host extends Channel {
   }
 
   _handleHandshake(e) {
-    let eDataArr = e.data && e.data.split ? e.data.split(':') : []
+    const eDataArr = e.data && e.data.split ? e.data.split(':') : []
     if (eDataArr.length == 3 && eDataArr[0] == MSG_TYPES.CONNECT && e.ports.length) {
-      let aId = eDataArr[1]
-      let cUnique = eDataArr[2]
+      const aId = eDataArr[1]
+      const cUnique = eDataArr[2]
       if (!aId || this.getPorts(aId).length >= 10) {
         e.ports[0].postMessage({
           action: MSG_TYPES.CONNECT,
@@ -97,7 +97,7 @@ export default class Host extends Channel {
         port: e.ports[0]
       }
 
-      let responder = (welcomeMessage, errMessage) => {
+      const responder = (welcomeMessage, errMessage) => {
         if (errMessage) {
           if (this.connections[cUnique]) {
             this._send(cUnique, MSG_TYPES.CONNECT, {error: {message: errMessage}})
@@ -115,13 +115,13 @@ export default class Host extends Channel {
   }
 
   send(client, action, data, _id) {
-    let id = _id || this._unique_id('h_')
+    const id = _id || this._unique_id('h_')
 
     this.ready(() => {
       this._send(client, action, data, id)
     })
 
-    let deferred = defer()
+    const deferred = defer()
     this.promises[id] = deferred
 
     return deferred.promise

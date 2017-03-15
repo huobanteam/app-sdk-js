@@ -114,7 +114,7 @@ export default class Client extends Channel {
    *                   opts.placement {String}  [web only] 选择器的位置,可选: left-bottom/right-bottom/left-top/right-top/bottom, 默认值: bottom
    */
   openUserProfile(userId, opts = {}, _event) {
-    let defaultOptions = {
+    const defaultOptions = {
       placement: 'bottom'
     }
     opts = {...defaultOptions, ...opts, user_id: userId}
@@ -171,7 +171,7 @@ export default class Client extends Channel {
       table_id: table.table_id,
       space_id: table.space_id
     }
-    let isV2 = this._checkUp2V2()
+    const isV2 = this._checkUp2V2()
     if (filters && (['object', 'function'].indexOf(typeof filters) >= 0) && filters.length !== 0) {
       params.filters = isV2 ? filters : cvFiltersToV1(filters)
     }
@@ -251,7 +251,7 @@ export default class Client extends Channel {
    * @param  {Object}  opts   附加参数
    */
   openItemDetail(itemId, opts = {}) {
-    let params = {
+    const params = {
       ...opts,
       item_id: parseInt(itemId, 10)
     }
@@ -282,7 +282,7 @@ export default class Client extends Channel {
    * @param  {Element}  _event 内部参数，代表触发的DOM事件
    */
   openUserPicker(opts = {}, fn, _event) {
-    let defaultOptions = {
+    const defaultOptions = {
       multi: false,
       required: false,
       title: '选择成员',
@@ -315,7 +315,7 @@ export default class Client extends Channel {
    * @param  {Element}  _event 内部参数，代表触发的DOM事件
    */
   openDatePicker(opts = {}, fn, _event) {
-    let defaultOptions = {
+    const defaultOptions = {
       type: 'date',
       placement: 'right-bottom'
     }
@@ -337,7 +337,7 @@ export default class Client extends Channel {
    *                    error 为出错时的具体错误, 如: {calcelled: true} 代表用户取消了选择, 或: {message: '默认值不正确'} 代表具体信息
    */
   openRichEditor(opts = {}, fn) {
-    let defaultOptions = {
+    const defaultOptions = {
       value: ''
     }
     opts = {...defaultOptions, ...opts}
@@ -358,7 +358,7 @@ export default class Client extends Channel {
    * @param  {[type]}   _event 内部参数，代表触发的DOM事件
    */
   openShare(opts = {}, fn, _event) {
-    let defaultOptions = {
+    const defaultOptions = {
       title: '',
       content: '',
       image: '',
@@ -457,7 +457,7 @@ export default class Client extends Channel {
    * @param  {[type]}   _event 内部参数，表示触发的DOM元素
    */
   getLocation(opts = {}, fn, _event) {
-    let defaultOptions = {
+    const defaultOptions = {
       enableHighAccuracy: true,
       timeout: 5000,
       maximumAge: 10000,
@@ -504,7 +504,7 @@ export default class Client extends Channel {
       this._user = ret.user
       this._table = ret.table || ret.app
       // 兼容旧的数据命名，避免图表应用报错
-      let tableId = this._table.table_id || this._table.app_id
+      const tableId = this._table.table_id || this._table.app_id
       this._table.app_id = this._table.table_id = tableId
       this._version = ret.version
       this.applicationId = applicationId
@@ -514,10 +514,10 @@ export default class Client extends Channel {
   }
 
   _getEventPosition(e) {
-    let target = e.currentTarget || e.target
-    let rect = target.getBoundingClientRect()
-    let {top, bottom, left, right, width, height} = rect
-    let {clientX, clientY, offsetX, offsetY} = e
+    const target = e.currentTarget || e.target
+    const rect = target.getBoundingClientRect()
+    const {top, bottom, left, right, width, height} = rect
+    const {clientX, clientY, offsetX, offsetY} = e
 
     return {
       target: {top, bottom, left, right, width, height, offsetWidth: e.target.offsetWidth, offsetHeight: e.target.offsetHeight},
