@@ -5,7 +5,7 @@ import Client from './index'
 
 export default class ClientBrowser extends Client {
 
-  init(applicationId) {
+  init(applicationId, params = {}) {
     const deferred = defer()
 
     if (window.parent === window) {
@@ -40,7 +40,7 @@ export default class ClientBrowser extends Client {
 
     window.parent.postMessage(`${MSG_TYPES.CONNECT}:${applicationId}:${this._id}`, HB_HOST, [mc.port2])
 
-    return this._init(applicationId)
+    return this._init(applicationId, params)
   }
 
   _send(action, data, id) {

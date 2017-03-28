@@ -49,11 +49,12 @@ export default class Client extends Channel {
    * 鉴权+发放ticket
    *
    * @param  {Integer} application_id 应用/扩展的id
+   * @param  {Object}  params 附加参数
    * @return {Promise}
    *         .then({ticket, user, app, version}) resolve时返回：票据、当前登录用户、当前表格、客户端版本()
    *         .catch({code, message})
    */
-  init(applicationId) {
+  init(applicationId, params = {}) {
     return defer().promise
   }
 
@@ -498,8 +499,8 @@ export default class Client extends Channel {
     this.push('installPackage', {package_id: packageId})
   }
 
-  _init(applicationId) {
-    return this.send('init', {application_id: applicationId}).then(ret => {
+  _init(applicationId, params = {}) {
+    return this.send('init', {application_id: applicationId, ...params}).then(ret => {
       this._ticket = ret.ticket
       this._user = ret.user
       this._table = ret.table || ret.app

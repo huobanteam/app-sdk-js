@@ -2,7 +2,7 @@ import Client from './index'
 
 export default class ClientWebview extends Client {
 
-  init(applicationId) {
+  init(applicationId, params = {}) {
     // iOS/Android下使用huoban://协议拦截的方式请求，无需初始化
     this.connect.resolve()
 
@@ -11,7 +11,7 @@ export default class ClientWebview extends Client {
     window.HB.bridgeCancel = this.handleBridgeInvoke.bind(this, 'cancel')
     window.HB.bridgeEmit = this.handleBridgeInvoke.bind(this, 'emit')
 
-    return this._init(applicationId)
+    return this._init(applicationId, params)
   }
 
   _send(action, data, id) {
